@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<movie>
+	<frame num="0">
+		<point x="285" y="287"/>
+		<point x="370" y="209"/>
+	</frame>
+	<frame num="1">
+		<point x="281" y="281"/>
+		<point x="366" y="196"/>
+	</frame>
+	<frame num="2">
+		<point x="277" y="273"/>
+		<point x="362" y="189"/>
+	</frame>
+	<frame num="3">
+		<point x="272" y="266"/>
+		<point x="359" y="181"/>
+	</frame>
+	<frame num="4">
+		<point x="267" y="257"/>
+		<point x="353" y="172"/>
+	</frame>
+	<frame num="5">
+		<point x="262" y="251"/>
+		<point x="348" y="167"/>
+	</frame>
+	<frame num="6">
+		<point x="258" y="249"/>
+		<point x="342" y="163"/>
+	</frame>
+	<frame num="7">
+		<point x="257" y="243"/>
+		<point x="339" y="162"/>
+	</frame>
+	<frame num="8">
+		<point x="258" y="237"/>
+		<point x="335" y="163"/>
+	</frame>
+	<frame num="9">
+		<point x="255" y="232"/>
+		<point x="335" y="164"/>
+	</frame>
+	<frame num="10">
+		<point x="256" y="227"/>
+		<point x="334" y="165"/>
+	</frame>
+	<frame num="11">
+		<point x="258" y="225"/>
+		<point x="337" y="167"/>
+	</frame>
+	<frame num="12">
+		<point x="259" y="222"/>
+		<point x="338" y="169"/>
+	</frame>
+	<frame num="13">
+		<point x="260" y="218"/>
+		<point x="341" y="174"/>
+	</frame>
+	<frame num="14">
+		<point x="261" y="214"/>
+		<point x="342" y="176"/>
+	</frame>
+	<frame num="15">
+		<point x="262" y="211"/>
+		<point x="342" y="179"/>
+	</frame>
+	<frame num="16">
+		<point x="262" y="204"/>
+		<point x="342" y="179"/>
+	</frame>
+	<frame num="17">
+		<point x="261" y="202"/>
+		<point x="340" y="179"/>
+	</frame>
+	<frame num="18">
+		<point x="261" y="199"/>
+		<point x="339" y="176"/>
+	</frame>
+	<frame num="19">
+		<point x="261" y="198"/>
+		<point x="337" y="178"/>
+	</frame>
+	<frame num="20">
+		<point x="258" y="197"/>
+		<point x="335" y="177"/>
+	</frame>
+	<frame num="21">
+		<point x="259" y="196"/>
+		<point x="336" y="178"/>
+	</frame>
+	<frame num="22">
+		<point x="258" y="197"/>
+		<point x="334" y="176"/>
+	</frame>
+	<frame num="23">
+		<point x="258" y="197"/>
+		<point x="335" y="176"/>
+	</frame>
+	<frame num="24">
+		<point x="258" y="197"/>
+		<point x="334" y="175"/>
+	</frame>
+	<frame num="25">
+		<point x="256" y="198"/>
+		<point x="336" y="174"/>
+	</frame>
+	<frame num="26">
+		<point x="257" y="197"/>
+		<point x="335" y="174"/>
+	</frame>
+	<frame num="27">
+		<point x="256" y="198"/>
+		<point x="335" y="175"/>
+	</frame>
+	<frame num="28">
+		<point x="256" y="198"/>
+		<point x="332" y="175"/>
+	</frame>
+</movie>
