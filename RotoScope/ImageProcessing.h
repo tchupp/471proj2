@@ -9,6 +9,10 @@
 #pragma once
 
 #include "graphics/GrImage.h"
+#include <algorithm>
+#include <vector>
+
+using namespace std;
 
 struct Color
 {
@@ -136,17 +140,20 @@ inline CPoint FindLightsaberHandle(CGrImage& inImg, int xL, int xR, int yB, int 
 }
 
 
-inline void PrewittOperation(CGrImage& img)
+inline void PrewittOperation(CGrImage& img, int xL = 0, int xR = -1, int yB = 0, int yT = -1, bool showImg = false)
 {
+	if (xR == -1) xR = img.GetWidth();
+	if (yT == -1) yT = img.GetHeight();
+
 	int gX[3][3] = {{-1, 0, 1},{-1, 0, 1},{-1, 0, 1}};
 	int gY[3][3] = {{-1, -1, -1},{0, 0, 0},{1, 1, 1}};
 
 	CGrImage outImg;
-	outImg.SetSameSize(img);
+	showImg ? outImg.Copy(img) : outImg.SetSameSize(img);
 
-	for (auto r = 0; r < img.GetHeight(); ++r)
+	for (auto r = yB; r < yT; ++r)
 	{
-		for (auto c = 0; c < img.GetWidth() * 3; ++c)
+		for (auto c = xL * 3; c < xR * 3; ++c)
 		{
 			auto pixelX = 0;
 			auto pixelY = 0;
@@ -168,7 +175,48 @@ inline void PrewittOperation(CGrImage& img)
 					}
 				}
 			}
-			outImg[r][c] = sqrt(pow(pixelX, 2) + pow(pixelY, 2));
+			auto color = sqrt(pow(pixelX, 2) + pow(pixelY, 2));
+			if (color > 125)
+				outImg[r][c] = color;
+		}
+	}
+	img = outImg;
+}
+
+inline void MedianFilter(CGrImage& img)
+{
+	CGrImage outImg;
+	outImg.Copy(img);
+
+	auto xL = 250;
+	auto xR = 550;
+	auto yB = 20;
+	auto yT = 400;
+
+	for (auto r = yB; r < yT; ++r)
+	{
+		for (auto c = xL * 3; c < xR * 3; ++c)
+		{
+			vector<BYTE> pixels;
+			for (auto y = -1; y <= 1; y++)
+			{
+				for (auto x = -3; x <= 3; x += 3)
+				{
+					auto i = x;
+					auto j = y;
+					if (c + i < 0 && c + i >= img.GetWidth() * 3)
+					{
+						i = 0;
+					}
+					if (r + j < 0 && r + j >= img.GetHeight())
+					{
+						j = 0;
+					}
+					pixels.push_back(img[r + j][c + i]);
+				}
+			}
+			sort(pixels.begin(), pixels.end());
+			outImg[r][c] = pixels[4];
 		}
 	}
 	img = outImg;

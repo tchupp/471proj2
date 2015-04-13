@@ -63,8 +63,11 @@ CRotoScopeDoc::CRotoScopeDoc()
 	mRotationRad = 0;
 
 	// Task 3
-	mBird.LoadFile(L"bird.png");
-	mShowBird = false;
+	mReplacementHead.LoadFile(L"bird.png");
+	mReplaceHead = false;
+
+	// Project 2
+	mShowOutline = false;
 }
 
 //! Destructor
@@ -517,11 +520,11 @@ void CRotoScopeDoc::DrawImage()
 		mImage.DrawLine(botPoint.x, botPoint.y, topPoint.x, topPoint.y, 255);
 	}
 
-	if (mShowBird) mImage.DrawImage(mBird, FindTopOfHead(mImage, 300, 450, 300, 400));
+	if (mReplaceHead) mImage.DrawImage(mReplacementHead, FindTopOfHead(mImage, 300, 450, 300, 400));
 
 	if (mRotate) RotateImage(mImage, mRotationRad);
 
-	PrewittOperation(mImage);
+	if (mShowOutline) PrewittOperation(mImage, 250, 550, 20, 400, false);
 
 	UpdateAllViews(nullptr);
 }
@@ -647,7 +650,7 @@ void CRotoScopeDoc::XmlLoadFrame(IXMLDOMNode* xml)
 	// Traverse the children of the <frame> tag
 	CComPtr<IXMLDOMNode> node;
 	xml->get_firstChild(&node);
-	for (; node != nullptr; NextNode(node))
+	for (; node != nullptr; NextNode(node)) 
 	{
 		// Get the name of the node
 		CComBSTR nodeName;

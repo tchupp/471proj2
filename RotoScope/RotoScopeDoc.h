@@ -74,9 +74,12 @@ private:
 	double mRotationRad;
 
 	// Task 3
-	bool mShowBird;
-	CGrImage mBird;
+	bool mReplaceHead;
+	CGrImage mReplacementHead;
 	CPoint mBirdPos;
+
+	// Project 2
+	bool mShowOutline;
 
 	afx_msg void OnFramesCreateoneframe();
 	afx_msg void OnFramesWriteoneframe();
