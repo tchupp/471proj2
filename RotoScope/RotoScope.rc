@@ -125,7 +125,7 @@ BEGIN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
     END
@@ -153,7 +153,7 @@ BEGIN
         MENUITEM "&Write then create one second", ID_FRAMES_WRITETHENCREATEONESECOND
         MENUITEM "&Write then create remaining", ID_FRAMES_WRITETHENCREATEREMAINING
     END
-    POPUP "Effects"
+    POPUP "&Effects"
     BEGIN
         MENUITEM "Outline &Steve",              ID_EFFECTS_OUTLINE
         MENUITEM SEPARATOR

@@ -48,7 +48,10 @@ BEGIN_MESSAGE_MAP(CRotoScopeDoc, CDocument)
 	ON_COMMAND(ID_EFFECTS_REPLACEHEA, &CRotoScopeDoc::OnEffectsReplacehea)
 	ON_UPDATE_COMMAND_UI(ID_EFFECTS_REPLACEHEA, &CRotoScopeDoc::OnUpdateEffectsReplacehea)
 	ON_COMMAND(ID_EFFECTS_REPLACEMENTHEAD, &CRotoScopeDoc::OnEffectsReplacementhead)
-	END_MESSAGE_MAP()
+	ON_COMMAND(ID_EFFECTS_REPLACEBACKGROUND, &CRotoScopeDoc::OnEffectsReplacebackground)
+	ON_UPDATE_COMMAND_UI(ID_EFFECTS_REPLACEBACKGROUND, &CRotoScopeDoc::OnUpdateEffectsReplacebackground)
+	ON_COMMAND(ID_EFFECTS_OPENBACKGROUNDIMAGE, &CRotoScopeDoc::OnEffectsOpenbackgroundimage)
+END_MESSAGE_MAP()
 
 //! Constructor for the document class.
 CRotoScopeDoc::CRotoScopeDoc()
@@ -804,11 +807,33 @@ void CRotoScopeDoc::OnUpdateEffectsReplacehea(CCmdUI* pCmdUI)
 
 void CRotoScopeDoc::OnEffectsReplacementhead()
 {
-	static TCHAR BASED_CODE szFilter[] = TEXT("Image Files (*.png)|*.png|All Files (*.*)|*.*||");
+	static TCHAR BASED_CODE szFilter[] = TEXT("Image Files (*.png;*.bmp)|*.png; *.bmp|All Files (*.*)|*.*||");
 
 	CFileDialog dlg(TRUE, TEXT(".png"), nullptr, 0, szFilter, nullptr);
 	if (dlg.DoModal() != IDOK) return;
 
 	auto c_string_t = dlg.GetPathName();
 	if (!mReplacementHead.LoadFile(c_string_t)) return;
+}
+
+void CRotoScopeDoc::OnEffectsReplacebackground()
+{
+	mReplaceBackground = !mReplaceBackground;
+}
+
+void CRotoScopeDoc::OnUpdateEffectsReplacebackground(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(mReplaceBackground);
+}
+
+
+void CRotoScopeDoc::OnEffectsOpenbackgroundimage()
+{
+	static TCHAR BASED_CODE szFilter[] = TEXT("Image Files (*.png;*.bmp)|*.png; *.bmp|All Files (*.*)|*.*||");
+
+	CFileDialog dlg(TRUE, TEXT(".png"), nullptr, 0, szFilter, nullptr);
+	if (dlg.DoModal() != IDOK) return;
+
+	auto c_string_t = dlg.GetPathName();
+	if (!mReplacementBackground.LoadFile(c_string_t)) return;
 }

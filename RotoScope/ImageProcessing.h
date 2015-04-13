@@ -59,12 +59,6 @@ inline CPoint FindTopOfHead(CGrImage& img, int xL = 0, int xR = -1, int yB = 0, 
 	if (xR == -1) xR = img.GetWidth();
 	if (yT == -1) yT = img.GetWidth();
 
-	img.DrawLine(xR, yB, xR, yT, 255);
-	img.DrawLine(xL, yB, xL, yT, 255);
-
-	img.DrawLine(xL, yB, xR, yB, 255);
-	img.DrawLine(xL, yT, xR, yT, 255);
-
 	CPoint topOfHead;
 
 	for (auto r = yT; r > yB; r--)

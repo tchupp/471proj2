@@ -81,6 +81,9 @@ private:
 	// Project 2
 	bool mShowOutline;
 
+	bool mReplaceBackground;
+	CGrImage mReplacementBackground;
+
 	afx_msg void OnFramesCreateoneframe();
 	afx_msg void OnFramesWriteoneframe();
 	afx_msg void OnFramesWritethencreateoneframe();
@@ -110,7 +113,10 @@ private:
 	afx_msg void OnEffectsOutline();
 	afx_msg void OnEffectsReplacehea();
 	afx_msg void OnEffectsReplacementhead();
+	afx_msg void OnEffectsReplacebackground();
+	afx_msg void OnEffectsOpenbackgroundimage();
 
 	afx_msg void OnUpdateEffectsOutline(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateEffectsReplacehea(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateEffectsReplacebackground(CCmdUI *pCmdUI);
 };
