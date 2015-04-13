@@ -153,6 +153,16 @@ BEGIN
         MENUITEM "&Write then create one second", ID_FRAMES_WRITETHENCREATEONESECOND
         MENUITEM "&Write then create remaining", ID_FRAMES_WRITETHENCREATEREMAINING
     END
+    POPUP "Effects"
+    BEGIN
+        MENUITEM "Outline &Steve",              ID_EFFECTS_OUTLINE
+        MENUITEM SEPARATOR
+        MENUITEM "Replace &Head",               ID_EFFECTS_REPLACEHEA
+        MENUITEM "&Open Head Image...",         ID_EFFECTS_REPLACEMENTHEAD
+        MENUITEM SEPARATOR
+        MENUITEM "Replace &Background",         ID_EFFECTS_REPLACEBACKGROUND
+        MENUITEM "&Open Background Image...",   ID_EFFECTS_OPENBACKGROUNDIMAGE
+    END
     POPUP "&View"
     BEGIN
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR

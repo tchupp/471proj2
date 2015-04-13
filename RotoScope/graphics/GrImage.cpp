@@ -228,18 +228,21 @@ void CGrImage::DrawImage(CGrImage& img, CPoint pos)
 		for (auto c = 0; c < img.GetWidth(); c++)
 		{
 			auto col = c + pos.x - img.GetWidth() / 2;
-			auto row = r + pos.y;
-			if (img.GetPlanes() == 4 && img[r][c * 4 + 3] >= 192)
+			auto row = r + pos.y - img.GetWidth() + 10;
+			if (row >= 0 && row < GetHeight() && col >= 0 && col < GetWidth())
 			{
-				m_image[row][col * 3 + 0] = img[r][c * 4 + 0];
-				m_image[row][col * 3 + 1] = img[r][c * 4 + 1];
-				m_image[row][col * 3 + 2] = img[r][c * 4 + 2];
-			}
-			else if (img.GetPlanes() == 3)
-			{
-				m_image[row][col * 3 + 0] = img[r][c * 3 + 0];
-				m_image[row][col * 3 + 1] = img[r][c * 3 + 1];
-				m_image[row][col * 3 + 2] = img[r][c * 3 + 2];
+				if (img.GetPlanes() == 4 && img[r][c * 4 + 3] >= 192)
+				{
+					m_image[row][col * 3 + 0] = img[r][c * 4 + 0];
+					m_image[row][col * 3 + 1] = img[r][c * 4 + 1];
+					m_image[row][col * 3 + 2] = img[r][c * 4 + 2];
+				}
+				else if (img.GetPlanes() == 3)
+				{
+					m_image[row][col * 3 + 0] = img[r][c * 3 + 0];
+					m_image[row][col * 3 + 1] = img[r][c * 3 + 1];
+					m_image[row][col * 3 + 2] = img[r][c * 3 + 2];
+				}
 			}
 		}
 	}

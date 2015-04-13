@@ -54,8 +54,17 @@ struct Color
 	}
 };
 
-inline CPoint FindTopOfHead(CGrImage& img, int xL, int xR, int yB, int yT)
+inline CPoint FindTopOfHead(CGrImage& img, int xL = 0, int xR = -1, int yB = 0, int yT = -1)
 {
+	if (xR == -1) xR = img.GetWidth();
+	if (yT == -1) yT = img.GetWidth();
+
+	img.DrawLine(xR, yB, xR, yT, 255);
+	img.DrawLine(xL, yB, xL, yT, 255);
+
+	img.DrawLine(xL, yB, xR, yB, 255);
+	img.DrawLine(xL, yT, xR, yT, 255);
+
 	CPoint topOfHead;
 
 	for (auto r = yT; r > yB; r--)
@@ -140,7 +149,7 @@ inline CPoint FindLightsaberHandle(CGrImage& inImg, int xL, int xR, int yB, int 
 }
 
 
-inline void PrewittOperation(CGrImage& img, int xL = 0, int xR = -1, int yB = 0, int yT = -1, bool showImg = false)
+inline void PrewittOperation(CGrImage& img, bool showImg = false, int xL = 0, int xR = -1, int yB = 0, int yT = -1)
 {
 	if (xR == -1) xR = img.GetWidth();
 	if (yT == -1) yT = img.GetHeight();
@@ -177,7 +186,7 @@ inline void PrewittOperation(CGrImage& img, int xL = 0, int xR = -1, int yB = 0,
 			}
 			auto color = sqrt(pow(pixelX, 2) + pow(pixelY, 2));
 			if (color > 125)
-				outImg[r][c] = color;
+				outImg[r][c] = BYTE(color);
 		}
 	}
 	img = outImg;

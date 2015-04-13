@@ -43,12 +43,19 @@ BEGIN_MESSAGE_MAP(CRotoScopeDoc, CDocument)
 	ON_COMMAND(ID_MOVIES_CLOSEBACKGROUNDAUDIO, &CRotoScopeDoc::OnMoviesClosebackgroundaudio)
 	ON_UPDATE_COMMAND_UI(ID_MOVIES_CLOSEBACKGROUNDAUDIO, &CRotoScopeDoc::OnUpdateMoviesClosebackgroundaudio)
 	ON_COMMAND(ID_EDIT_CLEARFRAME, &CRotoScopeDoc::OnEditClearframe)
+	ON_COMMAND(ID_EFFECTS_OUTLINE, &CRotoScopeDoc::OnEffectsOutline)
+	ON_UPDATE_COMMAND_UI(ID_EFFECTS_OUTLINE, &CRotoScopeDoc::OnUpdateEffectsOutline)
+	ON_COMMAND(ID_EFFECTS_REPLACEHEA, &CRotoScopeDoc::OnEffectsReplacehea)
+	ON_UPDATE_COMMAND_UI(ID_EFFECTS_REPLACEHEA, &CRotoScopeDoc::OnUpdateEffectsReplacehea)
+	ON_COMMAND(ID_EFFECTS_REPLACEMENTHEAD, &CRotoScopeDoc::OnEffectsReplacementhead)
 	END_MESSAGE_MAP()
 
 //! Constructor for the document class.
 CRotoScopeDoc::CRotoScopeDoc()
 {
 	CoInitialize(nullptr);
+
+	//mMovieMake.SetProfileName(L"profile720p.prx");
 
 	// Set the image size to an initial default value and black.
 	mImage.SetSize(640, 480);
@@ -514,17 +521,18 @@ void CRotoScopeDoc::DrawImage()
 		}
 	}
 
-	if (mFindSaber) {
+	if (mFindSaber)
+	{
 		auto topPoint = FindLightsaberTop(mInitial, 240, 290, 175, 300);
 		auto botPoint = FindLightsaberHandle(mInitial, 310, 390, 150, 225);
 		mImage.DrawLine(botPoint.x, botPoint.y, topPoint.x, topPoint.y, 255);
 	}
 
-	if (mReplaceHead) mImage.DrawImage(mReplacementHead, FindTopOfHead(mImage, 300, 450, 300, 400));
+	if (mReplaceHead) mImage.DrawImage(mReplacementHead, FindTopOfHead(mImage, 200, 600, 100, 400));
 
 	if (mRotate) RotateImage(mImage, mRotationRad);
 
-	if (mShowOutline) PrewittOperation(mImage, 250, 550, 20, 400, false);
+	if (mShowOutline) PrewittOperation(mImage, false);
 
 	UpdateAllViews(nullptr);
 }
@@ -650,7 +658,7 @@ void CRotoScopeDoc::XmlLoadFrame(IXMLDOMNode* xml)
 	// Traverse the children of the <frame> tag
 	CComPtr<IXMLDOMNode> node;
 	xml->get_firstChild(&node);
-	for (; node != nullptr; NextNode(node)) 
+	for (; node != nullptr; NextNode(node))
 	{
 		// Get the name of the node
 		CComBSTR nodeName;
@@ -772,4 +780,35 @@ void CRotoScopeDoc::OnEditClearframe()
 	}
 
 	DrawImage();
+}
+
+void CRotoScopeDoc::OnEffectsOutline()
+{
+	mShowOutline = !mShowOutline;
+}
+
+void CRotoScopeDoc::OnUpdateEffectsOutline(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(mShowOutline);
+}
+
+void CRotoScopeDoc::OnEffectsReplacehea()
+{
+	mReplaceHead = !mReplaceHead;
+}
+
+void CRotoScopeDoc::OnUpdateEffectsReplacehea(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(mReplaceHead);
+}
+
+void CRotoScopeDoc::OnEffectsReplacementhead()
+{
+	static TCHAR BASED_CODE szFilter[] = TEXT("Image Files (*.png)|*.png|All Files (*.*)|*.*||");
+
+	CFileDialog dlg(TRUE, TEXT(".png"), nullptr, 0, szFilter, nullptr);
+	if (dlg.DoModal() != IDOK) return;
+
+	auto c_string_t = dlg.GetPathName();
+	if (!mReplacementHead.LoadFile(c_string_t)) return;
 }

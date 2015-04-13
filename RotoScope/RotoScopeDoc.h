@@ -87,6 +87,9 @@ private:
 	afx_msg void OnFramesWritethencreateonesecond();
 	afx_msg void OnFramesWritethencreateremaining();
 
+	afx_msg void OnUpdateFramesWritethencreateoneframe(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateFramesWriteoneframe(CCmdUI* pCmdUI);
+
 	afx_msg void OnMoviesOpensourcemovie();
 	afx_msg void OnMoviesOpenoutputmovie();
 	afx_msg void OnMoviesOpenbackgroundaudio();
@@ -94,16 +97,20 @@ private:
 	afx_msg void OnMoviesCloseoutputmovie();
 	afx_msg void OnMoviesClosebackgroundaudio();
 
-	afx_msg void OnEditClearframe();
-
 	afx_msg void OnUpdateMoviesClosesourcemovie(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateMoviesCloseoutputmovie(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateMoviesClosebackgroundaudio(CCmdUI* pCmdUI);
 
-	afx_msg void OnUpdateFramesWritethencreateoneframe(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateFramesWriteoneframe(CCmdUI* pCmdUI);
+	afx_msg void OnEditClearframe();
 
 	virtual BOOL OnNewDocument() override;
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName) override;
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName) override;
+
+	afx_msg void OnEffectsOutline();
+	afx_msg void OnEffectsReplacehea();
+	afx_msg void OnEffectsReplacementhead();
+
+	afx_msg void OnUpdateEffectsOutline(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateEffectsReplacehea(CCmdUI *pCmdUI);
 };
