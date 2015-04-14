@@ -280,7 +280,7 @@ void CRotoScopeDoc::CreateOneFrame()
 	// Read any audio from the source video?  Note that we read and write the 
 	// audio associated with one frame of video.
 	//
-
+	
 	vector<short> audio;
 	if (mMovieSource.HasAudio() && mMovieSource.ReadAudio(audio))
 	{
@@ -532,8 +532,8 @@ void CRotoScopeDoc::DrawImage()
 	}
 
 	if (mReplaceHead) mImage.AddForegroundImage(mReplacementHead, FindTopOfHead(mImage, 200, 600, 100, 400));
-
-	if (mReplaceBackground) mImage.AddBackgroundImage(mReplacementBackground, 80, 650, 10, 450);
+	
+	if (mReplaceBackground) mImage.AddBackgroundImage(mReplacementBackground);
 
 	if (mRotate) RotateImage(mImage, mRotationRad);
 

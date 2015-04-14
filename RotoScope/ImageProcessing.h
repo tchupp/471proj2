@@ -181,8 +181,7 @@ inline void PrewittOperation(CGrImage& img, bool showImg = false, int xL = 0, in
 				}
 			}
 			auto color = sqrt(pow(pixelX, 2) + pow(pixelY, 2));
-			if (color > 125)
-				outImg[r][c] = BYTE(color);
+			outImg[r][c] = BYTE(color);
 		}
 	}
 	img = outImg;

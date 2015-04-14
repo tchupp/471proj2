@@ -270,7 +270,7 @@ void CGrImage::AddBackgroundImage(CGrImage& img, int xL, int xR, int yB, int yT)
 					auto bl = m_image[r][c * 3 + 0] / 255.;
 					auto gr = m_image[r][c * 3 + 1] / 255.;
 					auto rd = m_image[r][c * 3 + 2] / 255.;
-					auto alpha = 1. - 7.5 * (gr - 1 * rd);
+					auto alpha = 1. - 7.2 * (gr - 1 * rd);
 
 					alpha = alpha < 0 ? 0 : alpha;
 					alpha = alpha > 1 ? 1 : alpha;
