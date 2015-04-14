@@ -14,6 +14,7 @@
 
 #include <stdafx.h>
 #include "GrImage.h"
+#include "ImageProcessing.h"
 #include <string>
 
 using namespace std;
@@ -181,7 +182,6 @@ bool CGrImage::Draw(CDC* pDC, int p_x, int p_y) const
 	return true;
 }
 
-
 void CGrImage::DrawLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a)
 {
 	// Which dimension is greater?
@@ -221,7 +221,7 @@ void CGrImage::DrawLine(int x1, int y1, int x2, int y2, int r, int g, int b, int
 	}
 }
 
-void CGrImage::DrawImage(CGrImage& img, CPoint pos)
+void CGrImage::AddForegroundImage(CGrImage& img, CPoint pos)
 {
 	for (auto r = 0; r < img.GetHeight(); r++)
 	{
@@ -242,6 +242,42 @@ void CGrImage::DrawImage(CGrImage& img, CPoint pos)
 					m_image[row][col * 3 + 0] = img[r][c * 3 + 0];
 					m_image[row][col * 3 + 1] = img[r][c * 3 + 1];
 					m_image[row][col * 3 + 2] = img[r][c * 3 + 2];
+				}
+			}
+		}
+	}
+}
+
+void CGrImage::AddBackgroundImage(CGrImage& img, int xL, int xR, int yB, int yT)
+{
+	if (xR == -1) xR = img.GetWidth();
+	if (yT == -1) yT = img.GetHeight();
+
+	for (auto r = 0; r < GetHeight(); ++r)
+	{
+		for (auto c = 0; c < GetWidth(); ++c)
+		{
+			if (c >= 0 && c < img.GetWidth() && r >= 0 && r < img.GetHeight())
+			{
+				if (c < xL || c > xR || r < yB || r > yT)
+				{
+					m_image[r][c * 3 + 0] = img[r][c * 3 + 0];
+					m_image[r][c * 3 + 1] = img[r][c * 3 + 1];
+					m_image[r][c * 3 + 2] = img[r][c * 3 + 2];
+				}
+				else
+				{
+					auto bl = m_image[r][c * 3 + 0] / 255.;
+					auto gr = m_image[r][c * 3 + 1] / 255.;
+					auto rd = m_image[r][c * 3 + 2] / 255.;
+					auto alpha = 1. - 7.5 * (gr - 1 * rd);
+
+					alpha = alpha < 0 ? 0 : alpha;
+					alpha = alpha > 1 ? 1 : alpha;
+
+					m_image[r][c * 3 + 0] = BYTE(alpha * bl * 255. + (1 - alpha) * img[r][c * 3 + 0]);
+					m_image[r][c * 3 + 1] = BYTE(alpha * gr * 255. + (1 - alpha) * img[r][c * 3 + 1]);
+					m_image[r][c * 3 + 2] = BYTE(alpha * rd * 255. + (1 - alpha) * img[r][c * 3 + 2]);
 				}
 			}
 		}
@@ -286,7 +322,6 @@ void CGrImage::SetSameSize(const CGrImage& p_img, int planes)
 // Description :  Sets the size of the image and allocates memory.
 //                An image size of 0 is an empty empty.
 //
-
 void CGrImage::SetSize(int p_x, int p_y, int planes)
 {
 	// If already the right size, don't do anything, we are happy
@@ -414,7 +449,6 @@ static void SetTString(TCHAR** dest, const TCHAR* src, int size)
 //  Name :         CGrImage::LoadFile()
 //  Description :  Load this image from a file of type BMP or PPM
 //  Returns :      true if successful
-
 bool CGrImage::LoadFile(LPCTSTR filename)
 {
 	Clear();

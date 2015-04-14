@@ -227,10 +227,18 @@ public:
      * \param a Alpha color component */
 	void DrawLine(int x1, int y1, int x2, int y2, int r, int g = 0, int b = 0, int a = 0);
 
-	/*! \brief Draw a line of a given color on the image
+	/*! \brief Draw a foreground image
 	 * \param img Image to draw
 	 * \param pos Bottom left corner of the image */
-	void DrawImage(CGrImage& img, CPoint pos);
+	void AddForegroundImage(CGrImage& img, CPoint pos);
+
+	/*! \brief Replace background image
+	* \param img Image to draw for the backfround
+	* \param xL Left X location
+	* \param xR Right X location
+	* \param yB Bottom Y location
+	* \param yT Top Y location */
+	void AddBackgroundImage(CGrImage& img, int xL = 0, int xR = -1, int yB = 0, int yT = -1);
 
 private:
 	bool LoadFrom(const ATL::CImage* image, LPCTSTR filename);

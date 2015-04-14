@@ -113,9 +113,9 @@ inline CPoint FindLightsaberTop(CGrImage& inImg, int xL, int xR, int yB, int yT)
 }
 
 /* Specifically for finding the handle part of the lightsaber.
-*  In order to extend the functionality of this method,
-*  Color parameters would have to be an argument.
-*/
+ * In order to extend the functionality of this method,
+ * Color parameters would have to be an argument.
+ */
 inline CPoint FindLightsaberHandle(CGrImage& inImg, int xL, int xR, int yB, int yT)
 {
 	CPoint point(xL, yT);
@@ -142,7 +142,9 @@ inline CPoint FindLightsaberHandle(CGrImage& inImg, int xL, int xR, int yB, int 
 	return point;
 }
 
-
+/* Applies a Prewitt edge detection algorithm to the image argument
+ * Default arguments for area are the size of the image
+ */
 inline void PrewittOperation(CGrImage& img, bool showImg = false, int xL = 0, int xR = -1, int yB = 0, int yT = -1)
 {
 	if (xR == -1) xR = img.GetWidth();
@@ -186,6 +188,9 @@ inline void PrewittOperation(CGrImage& img, bool showImg = false, int xL = 0, in
 	img = outImg;
 }
 
+/* Applies a Median filter to the image argument
+ * Defaults to the area of the image
+ */
 inline void MedianFilter(CGrImage& img)
 {
 	CGrImage outImg;

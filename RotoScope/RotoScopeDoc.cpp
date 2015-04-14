@@ -58,7 +58,7 @@ CRotoScopeDoc::CRotoScopeDoc()
 {
 	CoInitialize(nullptr);
 
-	//mMovieMake.SetProfileName(L"profile720p.prx");
+	mMovieMake.SetProfileName(L"profile720p.prx");
 
 	// Set the image size to an initial default value and black.
 	mImage.SetSize(640, 480);
@@ -78,6 +78,7 @@ CRotoScopeDoc::CRotoScopeDoc()
 
 	// Project 2
 	mShowOutline = false;
+	mReplaceBackground = false;
 }
 
 //! Destructor
@@ -491,7 +492,6 @@ void CRotoScopeDoc::Mouse(int p_x, int p_y)
 //               dialog box while this is going on to prevent accessing anything other than
 //               a cancel button.  I'm not doing that, so be careful about what you hit.
 //
-
 void CRotoScopeDoc::MessagePump()
 {
 	// Allow any messages to be processed
@@ -507,7 +507,7 @@ void CRotoScopeDoc::DrawImage()
 	// Write image from m_initial into the current image
 	for (auto r = 0; r < mImage.GetHeight() && r < mInitial.GetHeight(); r++)
 	{
-		for (auto c = 0; c < mImage.GetWidth() && c < mInitial.GetWidth(); c++)
+		for (auto c = 0; c < mImage.GetWidth() && c < mInitial.GetWidth(); c++) 
 		{
 			mImage[r][c * 3 + 0] = mInitial[r][c * 3 + 0];
 			mImage[r][c * 3 + 1] = mInitial[r][c * 3 + 1];
@@ -531,7 +531,9 @@ void CRotoScopeDoc::DrawImage()
 		mImage.DrawLine(botPoint.x, botPoint.y, topPoint.x, topPoint.y, 255);
 	}
 
-	if (mReplaceHead) mImage.DrawImage(mReplacementHead, FindTopOfHead(mImage, 200, 600, 100, 400));
+	if (mReplaceHead) mImage.AddForegroundImage(mReplacementHead, FindTopOfHead(mImage, 200, 600, 100, 400));
+
+	if (mReplaceBackground) mImage.AddBackgroundImage(mReplacementBackground, 80, 650, 10, 450);
 
 	if (mRotate) RotateImage(mImage, mRotationRad);
 
@@ -812,8 +814,7 @@ void CRotoScopeDoc::OnEffectsReplacementhead()
 	CFileDialog dlg(TRUE, TEXT(".png"), nullptr, 0, szFilter, nullptr);
 	if (dlg.DoModal() != IDOK) return;
 
-	auto c_string_t = dlg.GetPathName();
-	if (!mReplacementHead.LoadFile(c_string_t)) return;
+	if (!mReplacementHead.LoadFile(dlg.GetPathName())) return;
 }
 
 void CRotoScopeDoc::OnEffectsReplacebackground()
@@ -826,7 +827,6 @@ void CRotoScopeDoc::OnUpdateEffectsReplacebackground(CCmdUI *pCmdUI)
 	pCmdUI->SetCheck(mReplaceBackground);
 }
 
-
 void CRotoScopeDoc::OnEffectsOpenbackgroundimage()
 {
 	static TCHAR BASED_CODE szFilter[] = TEXT("Image Files (*.png;*.bmp)|*.png; *.bmp|All Files (*.*)|*.*||");
@@ -834,6 +834,5 @@ void CRotoScopeDoc::OnEffectsOpenbackgroundimage()
 	CFileDialog dlg(TRUE, TEXT(".png"), nullptr, 0, szFilter, nullptr);
 	if (dlg.DoModal() != IDOK) return;
 
-	auto c_string_t = dlg.GetPathName();
-	if (!mReplacementBackground.LoadFile(c_string_t)) return;
+	if (!mReplacementBackground.LoadFile(dlg.GetPathName())) return;
 }
